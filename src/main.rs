@@ -2,11 +2,15 @@
 use ::config::ConfigError;
 use dotenv::dotenv;
 
-// Actix web related
+// jSON data handling
+use serde::{Deserialize, Serialize};
+
+// Actix related
 use actix_web::{web, App, http, HttpServer, Result};
+use actix_cors::Cors;
 
 // Custom built modules
-mod handlers
+mod handlers;
 
 // To parse env params
 #[derive(Debug, Deserialize)]
@@ -24,7 +28,7 @@ impl EnvConfig {
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
-    // Env details
+    // Env details - Only for dev and testing
     dotenv().ok();
     let config = EnvConfig::from_env().unwrap();
 
